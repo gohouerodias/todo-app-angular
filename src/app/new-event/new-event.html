@@ -1,1 +1,70 @@
-<p>new-event works!</p>
+<div id="formPage" >
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Детали напоминания</h3>
+        </div>
+        <div class="card-body">
+            <form id="reminderForm">
+                <div class="row g-4">
+                    <!-- first column-->
+                    <div class="col-md-6">
+                        <!-- execution data -->
+                        <div class="mb-3">
+                            <label for="dueDate" class="form-label fw-bold">
+                                <i class="bi bi-calendar-check text-success me-1"></i>
+                                Дата и время выполнения
+                            </label>
+                            <input type="datetime-local" class="form-control" id="dueDate">
+                        </div>
+
+                        <!-- Status -->
+                        <div class="mb-3">
+                            <label for="status" class="form-label fw-bold">
+                                <i class="bi bi-flag text-danger me-1"></i>
+                                Статус
+                            </label>
+                            <select class="form-select" id="status">
+                                <option value="В ожидании">В ожидании</option>
+                                <option value="В процессе">В процессе</option>
+                                <option value="Завершено">Завершено</option>
+                            </select>
+                        </div>
+
+                        <!-- full description -->
+                        <div class="mb-3">
+                            <label for="fullDescription" class="form-label fw-bold">
+                                <i class="bi bi-journal-text text-warning me-1"></i>
+                                Полное описание
+                            </label>
+                            <textarea class="form-control" id="fullDescription" rows="8"
+                                placeholder="Введите полное описание напоминания..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- second column -->
+                    <div class="col-md-6">
+                        <!-- short description -->
+                        <div class="mb-3">
+                            <label for="shortDescription" class="form-label fw-bold">
+                                <i class="bi bi-card-text text-info me-1"></i>
+                                Краткое описание
+                            </label>
+                            <textarea class="form-control" id="shortDescription" rows="1"
+                                placeholder="Краткое описание напоминания"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- buttons -->
+                <div class="d-flex gap-2 mt-3">
+                    <button type="button" class="btn btn-secondary btn-lg" onclick="">
+                        <i class="bi bi-arrow-left me-2"></i>Назад
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="">
+                        <i class="bi bi-save me-2"></i>Сохранить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
