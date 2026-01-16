@@ -1,10 +1,10 @@
-<div id="formPage" >
+<div id="formPage">
     <div class="card shadow">
         <div class="card-header bg-dark text-white">
             <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Детали напоминания</h3>
         </div>
         <div class="card-body">
-            <form id="reminderForm">
+            <form id="reminderForm" [formGroup]="form" (submit)="submit()">
                 <div class="row g-4">
                     <!-- first column-->
                     <div class="col-md-6">
@@ -14,21 +14,40 @@
                                 <i class="bi bi-calendar-check text-success me-1"></i>
                                 Дата и время выполнения
                             </label>
-                            <input type="datetime-local" class="form-control" id="dueDate">
+                            <input type="datetime-local"
+                            autofocus
+                                class="form-control"
+                                [class.is-invalid]="dueDateControl.touched && dueDateControl.hasError('required')"
+                                id="dueDate" [formControl]="dueDateControl">
                         </div>
 
+                        @if (form.invalid && dueDateControl.touched || dueDateControl.dirty &&
+                        dueDateControl.hasError('required')) {
+                        <div class="text-danger mb-3">
+                            Это поле обязательно.
+                        </div>
+                        }
                         <!-- Status -->
                         <div class="mb-3">
                             <label for="status" class="form-label fw-bold">
                                 <i class="bi bi-flag text-danger me-1"></i>
                                 Статус
                             </label>
-                            <select class="form-select" id="status">
+                            <select class="form-select" 
+                            autofocus
+                            [class.is-invalid]="statusControl.touched && statusControl.hasError('required')"
+                            id="status" [formControl]="statusControl">
                                 <option value="В ожидании">В ожидании</option>
                                 <option value="В процессе">В процессе</option>
                                 <option value="Завершено">Завершено</option>
                             </select>
                         </div>
+                        @if(statusControl.invalid && statusControl.touched || statusControl.dirty &&
+                        statusControl.hasError('required')) {
+                        <div class="text-danger mb-3">
+                            Это поле обязательно.
+                        </div>
+                        }
 
                         <!-- full description -->
                         <div class="mb-3">
@@ -36,11 +55,20 @@
                                 <i class="bi bi-journal-text text-warning me-1"></i>
                                 Полное описание
                             </label>
-                            <textarea class="form-control" id="fullDescription" rows="8"
-                                placeholder="Введите полное описание напоминания..."></textarea>
+                            <textarea class="form-control"
+                            [class.is-invalid]="fullDescriptionControl.touched && fullDescriptionControl.hasError('required')"
+                            id="fullDescription" rows="8"
+                                placeholder="Введите полное описание напоминания..."
+                                [formControl]="fullDescriptionControl"></textarea>
+                                
+@if(fullDescriptionControl.invalid && fullDescriptionControl.touched || fullDescriptionControl.dirty &&
+                        fullDescriptionControl.hasError('required')) {
+                        <div class="text-danger mb-3">
+                            Это поле обязательно.
+                        </div>
+                        }
                         </div>
                     </div>
-
                     <!-- second column -->
                     <div class="col-md-6">
                         <!-- short description -->
@@ -49,18 +77,27 @@
                                 <i class="bi bi-card-text text-info me-1"></i>
                                 Краткое описание
                             </label>
-                            <textarea class="form-control" id="shortDescription" rows="1"
-                                placeholder="Краткое описание напоминания"></textarea>
+                            <textarea class="form-control" 
+                            [class.is-invalid]="shortDescriptionControl.touched && shortDescriptionControl.hasError('required')"
+                            id="shortDescription" rows="1"
+                                placeholder="Краткое описание напоминания"
+                                [formControl]="shortDescriptionControl"></textarea>
                         </div>
+@if(shortDescriptionControl.invalid && shortDescriptionControl.touched || shortDescriptionControl.dirty &&
+                        shortDescriptionControl.hasError('required')) {
+                        <div class="text-danger mb-3">
+                            Это поле обязательно.
+                    </div>}
                     </div>
                 </div>
 
+
                 <!-- buttons -->
                 <div class="d-flex gap-2 mt-3">
-                    <button type="button" class="btn btn-secondary btn-lg" onclick="">
+                    <!-- <button type="button" class="btn btn-secondary btn-lg" onclick="">
                         <i class="bi bi-arrow-left me-2"></i>Назад
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg" onclick="">
+                    </button> -->
+                    <button type="submit" class="btn btn-primary btn-lg" onclick="">
                         <i class="bi bi-save me-2"></i>Сохранить
                     </button>
                 </div>
