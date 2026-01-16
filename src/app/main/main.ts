@@ -17,6 +17,8 @@ export class Main implements OnInit {
   tasks: TaskM[] = [];
   statuses: StatusM[] = [];
   statusCache: Map<number, string> = new Map();
+  selectedTask: TaskM | null = null;
+  showModal: boolean = false;
   
   constructor(
     private taskService: TaskService,
@@ -111,30 +113,30 @@ export class Main implements OnInit {
 
   getStatusClass(statusId: number): string {
     const classes: { [key: number]: string } = {
-      1: 'bg-success',
+      1: 'bg-secondary',
       2: 'bg-primary',
-      3: 'bg-secondary',
-      4: 'bg-warning',
+      3: 'bg-success',
     };
     return classes[statusId] || 'bg-secondary';
+  }
+
+
+  confirmDelete(id: number | undefined) {
+    if (id && confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
+      this.taskService.deleteTask(id).subscribe({
+        next: () => {
+          this.loadTasks();
+          alert('Tâche supprimée avec succès');
+        },
+        error: (err) => console.error('Erreur lors de la suppression:', err)
+      });
+    }
   }
 
   editTask(task: TaskM) {
     console.log('Edit task:', task);
     // TODO: Implement edit functionality
     this.router.navigate(['/newEvent', task.id]);
-  }
-
-  confirmDelete(id: number | undefined) {
-    if (id && confirm('Вы уверены, что хотите удалить эту задачу?')) {
-      this.taskService.deleteTask(id).subscribe({
-        next: () => {
-          this.loadTasks();
-          alert('Задача успешно удалена');
-        },
-        error: (err) => console.error('Ошибка при удалении:', err)
-      });
-    }
   }
 
   movetoTaskpage() {
@@ -149,6 +151,17 @@ export class Main implements OnInit {
 
   trackByTaskId(index: number, task: TaskM): number | undefined {
     return task.id;
+  }
+
+  viewTaskDetails(task: TaskM) {
+    this.selectedTask = task;
+    this.showModal = true;
+    console.log('Viewing task details:', task);
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.selectedTask = null;
   }
 
 }

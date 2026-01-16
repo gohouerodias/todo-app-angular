@@ -145,4 +145,30 @@ tbody tr {
       }
     }
   }
+  .modal.show {
+  display: block;
+}
+
+tr[style*="cursor: pointer"] td:not(:last-child):hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #6c757d;
+  
+  i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
 }

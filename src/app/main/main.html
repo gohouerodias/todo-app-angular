@@ -1,7 +1,7 @@
 <!-- list-event.component.html -->
 <div class="container">
   <div class="header-section">
-    <h2>Liste tasks</h2>
+    <h2>Списки дел</h2>
     <button class="btn btn-primary" (click)="movetoTaskpage()">
       <i class="bi bi-plus-circle"></i>
       <span>Новое напоминание</span>
@@ -21,15 +21,15 @@
       </thead>
       <tbody>
         @for (task of tasks; track task.id) {
-          <tr>
-            <td>
+          <tr style="cursor: pointer;">
+            <td (click)="viewTaskDetails(task)">
               <span class="badge" [ngClass]="getStatusClass(task.status_id)">
                 {{ getStatusName(task.status_id) }}
               </span>
             </td>
-            <td>{{ task.description }}</td>
-            <td>{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
-            <td>{{ task.execution_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td (click)="viewTaskDetails(task)">{{ task.description }}</td>
+            <td (click)="viewTaskDetails(task)">{{ task.created_at | date:'dd/MM/yyyy HH:mm' }}</td>
+            <td (click)="viewTaskDetails(task)">{{ task.execution_datetime | date:'dd/MM/yyyy HH:mm' }}</td>
             <td class="text-center">
               <div class="btn-group">
                 <button class="btn btn-sm btn-warning" (click)="editTask(task)" title="Modifier">
@@ -56,4 +56,106 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Modal for Task Details -->
+  @if (showModal && selectedTask) {
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+            <h5 class="modal-title">
+              <i class="bi bi-info-circle me-2"></i>
+              Детали задачи
+            </h5>
+            <button type="button" class="btn-close btn-close-white" (click)="closeModal()"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row g-3">
+              <!-- Status -->
+              <div class="col-md-6">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-flag me-1"></i>
+                  Статус
+                </label>
+                <span class="badge fs-6" [ngClass]="getStatusClass(selectedTask.status_id)">
+                  {{ getStatusName(selectedTask.status_id) }}
+                </span>
+              </div>
+
+              <!-- ID -->
+              <div class="col-md-6">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-hash me-1"></i>
+                  ID
+                </label>
+                <span class="fs-6">{{ selectedTask.id }}</span>
+              </div>
+
+              <!-- Short Description -->
+              <div class="col-12">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-card-text me-1"></i>
+                  Краткое описание
+                </label>
+                <p class="fs-6 mb-0">{{ selectedTask.description }}</p>
+              </div>
+
+              <!-- Full Description -->
+              <div class="col-12">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-journal-text me-1"></i>
+                  Полное описание
+                </label>
+                <div class="p-3 bg-light rounded">
+                  <p class="mb-0" style="white-space: pre-wrap;">{{ selectedTask.short_description || 'Нет полного описания' }}</p>
+                </div>
+              </div>
+
+              <!-- Created At -->
+              <div class="col-md-6">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-calendar-plus me-1"></i>
+                  Дата создания
+                </label>
+                <span class="fs-6">{{ selectedTask.created_at | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+              </div>
+
+              <!-- Execution Date -->
+              <div class="col-md-6">
+                <label class="fw-bold text-muted d-block mb-2">
+                  <i class="bi bi-calendar-check me-1"></i>
+                  Дата выполнения
+                </label>
+                <span class="fs-6">{{ selectedTask.execution_datetime | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+              </div>
+
+              <!-- Updated At -->
+              @if (selectedTask.updated_at) {
+                <div class="col-md-6">
+                  <label class="fw-bold text-muted d-block mb-2">
+                    <i class="bi bi-clock-history me-1"></i>
+                    Последнее обновление
+                  </label>
+                  <span class="fs-6">{{ selectedTask.updated_at | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+                </div>
+              }
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-warning" (click)="editTask(selectedTask); closeModal()">
+              <i class="bi bi-pencil me-1"></i>
+              Редактировать
+            </button>
+            <button type="button" class="btn btn-danger" (click)="confirmDelete(selectedTask.id); closeModal()">
+              <i class="bi bi-trash me-1"></i>
+              Удалить
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="closeModal()">
+              Закрыть
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>

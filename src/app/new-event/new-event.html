@@ -14,9 +14,7 @@
                                 <i class="bi bi-calendar-check text-success me-1"></i>
                                 Дата и время выполнения
                             </label>
-                            <input type="datetime-local"
-                            autofocus
-                                class="form-control"
+                            <input type="datetime-local" autofocus class="form-control"
                                 [class.is-invalid]="dueDateControl.touched && dueDateControl.hasError('required')"
                                 id="dueDate" [formControl]="dueDateControl">
                         </div>
@@ -33,13 +31,13 @@
                                 <i class="bi bi-flag text-danger me-1"></i>
                                 Статус
                             </label>
-                            <select class="form-select" 
-                            autofocus
-                            [class.is-invalid]="statusControl.touched && statusControl.hasError('required')"
-                            id="status" [formControl]="statusControl">
-                                <option value="В ожидании">В ожидании</option>
-                                <option value="В процессе">В процессе</option>
-                                <option value="Завершено">Завершено</option>
+                            <select class="form-select" autofocus
+                                [class.is-invalid]="statusControl.touched && statusControl.hasError('required')"
+                                id="status" [formControl]="statusControl">
+                                <option value="">Выберите статус</option>
+                                @for (status of statuses; track status.id) {
+                                <option [value]="status.id">{{ status.name }}</option>
+                                }
                             </select>
                         </div>
                         @if(statusControl.invalid && statusControl.touched || statusControl.dirty &&
@@ -56,17 +54,17 @@
                                 Полное описание
                             </label>
                             <textarea class="form-control"
-                            [class.is-invalid]="fullDescriptionControl.touched && fullDescriptionControl.hasError('required')"
-                            id="fullDescription" rows="8"
-                                placeholder="Введите полное описание напоминания..."
+                                [class.is-invalid]="fullDescriptionControl.touched && fullDescriptionControl.hasError('required')"
+                                id="fullDescription" rows="8" placeholder="Введите полное описание напоминания..."
                                 [formControl]="fullDescriptionControl"></textarea>
-                                
-@if(fullDescriptionControl.invalid && fullDescriptionControl.touched || fullDescriptionControl.dirty &&
-                        fullDescriptionControl.hasError('required')) {
-                        <div class="text-danger mb-3">
-                            Это поле обязательно.
-                        </div>
-                        }
+
+                            @if(fullDescriptionControl.invalid && fullDescriptionControl.touched ||
+                            fullDescriptionControl.dirty &&
+                            fullDescriptionControl.hasError('required')) {
+                            <div class="text-danger mb-3">
+                                Это поле обязательно.
+                            </div>
+                            }
                         </div>
                     </div>
                     <!-- second column -->
@@ -77,17 +75,17 @@
                                 <i class="bi bi-card-text text-info me-1"></i>
                                 Краткое описание
                             </label>
-                            <textarea class="form-control" 
-                            [class.is-invalid]="shortDescriptionControl.touched && shortDescriptionControl.hasError('required')"
-                            id="shortDescription" rows="1"
-                                placeholder="Краткое описание напоминания"
+                            <textarea class="form-control"
+                                [class.is-invalid]="shortDescriptionControl.touched && shortDescriptionControl.hasError('required')"
+                                id="shortDescription" rows="1" placeholder="Краткое описание напоминания"
                                 [formControl]="shortDescriptionControl"></textarea>
                         </div>
-@if(shortDescriptionControl.invalid && shortDescriptionControl.touched || shortDescriptionControl.dirty &&
+                        @if(shortDescriptionControl.invalid && shortDescriptionControl.touched ||
+                        shortDescriptionControl.dirty &&
                         shortDescriptionControl.hasError('required')) {
                         <div class="text-danger mb-3">
                             Это поле обязательно.
-                    </div>}
+                        </div>}
                     </div>
                 </div>
 

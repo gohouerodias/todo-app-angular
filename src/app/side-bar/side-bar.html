@@ -1,42 +1,31 @@
-<nav class="d-none d-md-block bg-light sidebar">
-  <div class="sidebar-sticky">
-    <ul class="nav flex-column">
+<!-- Modern Sidebar -->
+<nav class=" flex-column sidebar">
+  <div class="sidebar-header">
+    
+  </div>
+
+  <div class="sidebar-content flex-grow-1">
+    <ul class="nav flex-column gap-2">
       <li class="nav-item">
-        <a class="nav-link active fs-4" routerLink="/">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list-task"
-            viewBox="0 0 24 24">
-            <path fill-rule="evenodd"
-              d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5zM3 3H2v1h1z" />
-            <path
-              d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1z" />
-            <path fill-rule="evenodd"
-              d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5zM2 7h1v1H2zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm1 .5H2v1h1z" />
-          </svg>
-          Списки дел
+        <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+          <div class="nav-icon">
+            <i class="bi bi-list-task"></i>
+          </div>
+          <span class="nav-text">Списки дел</span>
+          <div class="nav-indicator"></div>
         </a>
       </li>
+      
       <li class="nav-item">
-        <a class="nav-link fs-4" routerLink="/newEvent">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-file-earmark-plus-fill" viewBox="0 0 16 16">
-            <path
-              d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M8.5 7v1.5H10a.5.5 0 0 1 0 1H8.5V11a.5.5 0 0 1-1 0V9.5H6a.5.5 0 0 1 0-1h1.5V7a.5.5 0 0 1 1 0" />
-          </svg>
-          создать напоминание
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link fs-4" routerLink="/calendar">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-calendar-check" viewBox="0 0 16 16">
-            <path
-              d="M10.854 7.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 9.793l2.646-2.647a.5.5 0 0 1 .708 0" />
-            <path
-              d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z" />
-          </svg>
-          календарь
+        <a class="nav-link" routerLink="/newEvent" routerLinkActive="active">
+          <div class="nav-icon">
+            <i class="bi bi-file-earmark-plus"></i>
+          </div>
+          <span class="nav-text">Создать напоминание</span>
+          <div class="nav-indicator"></div>
         </a>
       </li>
     </ul>
   </div>
+
 </nav>
