@@ -12,9 +12,11 @@ export class TaskService {
 
   // GET /api/tasks
   getTasks(): Observable<TaskM[]> {
+    console.log(this.http.get<TaskM[]>(this.apiUrl));
+    
     return this.http.get<TaskM[]>(this.apiUrl);
   }
-
+ 
   // GET /api/tasks/{task}
   getTask(id: number): Observable<TaskM> {
     return this.http.get<TaskM>(`${this.apiUrl}/${id}`);
