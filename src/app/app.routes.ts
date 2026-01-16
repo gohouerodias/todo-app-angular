@@ -9,6 +9,10 @@ export const routes: Routes = [
         component: Main
     },
     {
+        path: 'newEvent/:id',
+        component: NewEvent
+    },
+    {
         path: 'newEvent',
         component: NewEvent
     },

@@ -122,7 +122,7 @@ export class Main implements OnInit {
   editTask(task: TaskM) {
     console.log('Edit task:', task);
     // TODO: Implement edit functionality
-    this.router.navigate(['/editTask', task.id]);
+    this.router.navigate(['/newEvent', task.id]);
   }
 
   confirmDelete(id: number | undefined) {
