@@ -1,105 +1,362 @@
-<div id="formPage">
-    <div class="card shadow">
-        <div class="card-header bg-dark text-white">
-            <h3 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Детали напоминания</h3>
+<!-- Reminder Form Layout -->
+<div id="formPage" class="container py-4">
+  
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <h2 class="fw-bold">
+      <i class="bi bi-pencil-square me-2 text-primary"></i>
+      {{ isEditMode ? 'Редактировать напоминание' : 'Новое напоминание' }}
+    </h2>
+  </div>
+
+  <form [formGroup]="form" (submit)="submit()">
+    
+    <!-- Main Card -->
+    <div class="card shadow-sm border-0 mb-4">
+      <div class="card-header bg-gradient-primary text-white">
+        <h5 class="mb-0">
+          <i class="bi bi-info-circle me-2"></i>
+          Детали напоминания
+        </h5>
+      </div>
+      <div class="card-body p-4">
+        
+        <!-- First Row: 3 columns -->
+        <div class="row g-4 mb-4">
+          <!-- Execution Date -->
+          <div class="col-md-4">
+            <label for="dueDate" class="form-label fw-bold">
+              <i class="bi bi-calendar-check text-success me-2"></i>
+              Дата и время выполнения
+              <span class="text-danger">*</span>
+            </label>
+            <input 
+              type="datetime-local" 
+              class="form-control form-control-lg"
+              [class.is-invalid]="dueDateControl.touched && dueDateControl.hasError('required')"
+              id="dueDate" 
+              [formControl]="dueDateControl">
+            
+            @if (dueDateControl.invalid && dueDateControl.touched || 
+                 dueDateControl.dirty && dueDateControl.hasError('required')) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Это поле обязательно
+              </div>
+            }
+          </div>
+
+          <!-- Status -->
+          <div class="col-md-4">
+            <label for="status" class="form-label fw-bold">
+              <i class="bi bi-flag text-danger me-2"></i>
+              Статус
+              <span class="text-danger">*</span>
+            </label>
+            <select 
+              class="form-select form-select-lg"
+              [class.is-invalid]="statusControl.touched && statusControl.hasError('required')"
+              id="status" 
+              [formControl]="statusControl">
+              <option value="">Выберите статус</option>
+              @for (status of statuses; track status.id) {
+                <option [value]="status.id">{{ status.name }}</option>
+              }
+            </select>
+            
+            @if(statusControl.invalid && statusControl.touched || 
+                statusControl.dirty && statusControl.hasError('required')) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Это поле обязательно
+              </div>
+            }
+          </div>
+
         </div>
-        <div class="card-body">
-            <form id="reminderForm" [formGroup]="form" (submit)="submit()">
-                <div class="row g-4">
-                    <!-- first column-->
-                    <div class="col-md-6">
-                        <!-- execution data -->
-                        <div class="mb-3">
-                            <label for="dueDate" class="form-label fw-bold">
-                                <i class="bi bi-calendar-check text-success me-1"></i>
-                                Дата и время выполнения
-                            </label>
-                            <input type="datetime-local" autofocus class="form-control"
-                                [class.is-invalid]="dueDateControl.touched && dueDateControl.hasError('required')"
-                                id="dueDate" [formControl]="dueDateControl">
-                        </div>
 
-                        @if (form.invalid && dueDateControl.touched || dueDateControl.dirty &&
-                        dueDateControl.hasError('required')) {
-                        <div class="text-danger mb-3">
-                            Это поле обязательно.
-                        </div>
-                        }
-                        <!-- Status -->
-                        <div class="mb-3">
-                            <label for="status" class="form-label fw-bold">
-                                <i class="bi bi-flag text-danger me-1"></i>
-                                Статус
-                            </label>
-                            <select class="form-select" autofocus
-                                [class.is-invalid]="statusControl.touched && statusControl.hasError('required')"
-                                id="status" [formControl]="statusControl">
-                                <option value="">Выберите статус</option>
-                                @for (status of statuses; track status.id) {
-                                <option [value]="status.id">{{ status.name }}</option>
-                                }
-                            </select>
-                        </div>
-                        @if(statusControl.invalid && statusControl.touched || statusControl.dirty &&
-                        statusControl.hasError('required')) {
-                        <div class="text-danger mb-3">
-                            Это поле обязательно.
-                        </div>
-                        }
-
-                        <!-- full description -->
-                        <div class="mb-3">
-                            <label for="fullDescription" class="form-label fw-bold">
-                                <i class="bi bi-journal-text text-warning me-1"></i>
-                                Полное описание
-                            </label>
-                            <textarea class="form-control"
-                                [class.is-invalid]="fullDescriptionControl.touched && fullDescriptionControl.hasError('required')"
-                                id="fullDescription" rows="8" placeholder="Введите полное описание напоминания..."
-                                [formControl]="fullDescriptionControl"></textarea>
-
-                            @if(fullDescriptionControl.invalid && fullDescriptionControl.touched ||
-                            fullDescriptionControl.dirty &&
-                            fullDescriptionControl.hasError('required')) {
-                            <div class="text-danger mb-3">
-                                Это поле обязательно.
-                            </div>
-                            }
-                        </div>
-                    </div>
-                    <!-- second column -->
-                    <div class="col-md-6">
-                        <!-- short description -->
-                        <div class="mb-3">
-                            <label for="shortDescription" class="form-label fw-bold">
-                                <i class="bi bi-card-text text-info me-1"></i>
-                                Краткое описание
-                            </label>
-                            <textarea class="form-control"
-                                [class.is-invalid]="shortDescriptionControl.touched && shortDescriptionControl.hasError('required')"
-                                id="shortDescription" rows="1" placeholder="Краткое описание напоминания"
-                                [formControl]="shortDescriptionControl"></textarea>
-                        </div>
-                        @if(shortDescriptionControl.invalid && shortDescriptionControl.touched ||
-                        shortDescriptionControl.dirty &&
-                        shortDescriptionControl.hasError('required')) {
-                        <div class="text-danger mb-3">
-                            Это поле обязательно.
-                        </div>}
-                    </div>
-                </div>
-
-
-                <!-- buttons -->
-                <div class="d-flex gap-2 mt-3">
-                    <!-- <button type="button" class="btn btn-secondary btn-lg" onclick="">
-                        <i class="bi bi-arrow-left me-2"></i>Назад
-                    </button> -->
-                    <button type="submit" class="btn btn-primary btn-lg" onclick="">
-                        <i class="bi bi-save me-2"></i>Сохранить
-                    </button>
-                </div>
-            </form>
+        <!-- Second Row: Short Description (full width) -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <label for="shortDescription" class="form-label fw-bold">
+              <i class="bi bi-card-text text-warning me-2"></i>
+              Краткое описание
+              <span class="text-danger">*</span>
+            </label>
+            <textarea 
+              class="form-control form-control-lg"
+              [class.is-invalid]="shortDescriptionControl.touched && shortDescriptionControl.hasError('required')"
+              id="shortDescription" 
+              rows="1"
+              placeholder="Введите краткое описание напоминания"
+              [formControl]="shortDescriptionControl"></textarea>
+            
+            @if(shortDescriptionControl.invalid && shortDescriptionControl.touched || 
+                shortDescriptionControl.dirty && shortDescriptionControl.hasError('required')) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Это поле обязательно
+              </div>
+            }
+          </div>
         </div>
+
+        <!-- Full Description (bottom section) -->
+        <div class="row">
+          <div class="col-12">
+            <label for="fullDescription" class="form-label fw-bold">
+              <i class="bi bi-journal-text text-primary me-2"></i>
+              Полное описание
+              <span class="text-danger">*</span>
+            </label>
+            <textarea 
+              class="form-control"
+              [class.is-invalid]="fullDescriptionControl.touched && fullDescriptionControl.hasError('required')"
+              id="fullDescription" 
+              rows="8"
+              placeholder="Введите полное описание напоминания...
+
+Вы можете добавить:
+• Детали задачи
+• Важные заметки
+• Шаги выполнения
+• Дополнительную информацию"
+              [formControl]="fullDescriptionControl"></textarea>
+            
+            @if(fullDescriptionControl.invalid && fullDescriptionControl.touched || 
+                fullDescriptionControl.dirty && fullDescriptionControl.hasError('required')) {
+              <div class="invalid-feedback d-block">
+                <i class="bi bi-exclamation-circle me-1"></i>
+                Это поле обязательно
+              </div>
+            }
+            
+            <!-- Character Counter -->
+            <div class="text-muted text-end small mt-2">
+              <i class="bi bi-fonts me-1"></i>
+              Символов: {{ fullDescriptionControl.value?.length || 0 }}
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
+
+    <!-- Action Buttons -->
+    <div class="card shadow-sm border-0">
+      <div class="card-body">
+        <div class="d-flex flex-wrap gap-3 justify-content-between align-items-center">
+          
+          <!-- Info -->
+          <div class="form-info text-muted d-none d-md-block">
+            <i class="bi bi-info-circle me-1"></i>
+            <small>Все поля отмеченные <span class="text-danger">*</span> обязательны для заполнения</small>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex gap-2 ms-auto">
+            <button 
+              type="button" 
+              class="btn btn-outline-secondary btn-lg"
+              (click)="cancel()">
+              <i class="bi bi-arrow-left me-2"></i>
+              Назад
+            </button>
+            <button 
+              type="submit" 
+              class="btn btn-primary btn-lg"
+              [disabled]="form.invalid">
+              <i class="bi bi-save me-2"></i>
+              {{ isEditMode ? 'Обновить' : 'Сохранить' }}
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
 </div>
+
+<style>
+#formPage {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  border-bottom: 3px solid #e9ecef;
+  padding-bottom: 1rem;
+}
+
+.page-header h2 {
+  color: #1e293b;
+  font-size: 1.75rem;
+}
+
+.card {
+  border-radius: 12px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card-header {
+  border-radius: 12px 12px 0 0 !important;
+  padding: 1.25rem 1.5rem;
+  border: none;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border: 2px solid #e2e8f0;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+}
+
+.form-control[readonly] {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+}
+
+.form-control.is-invalid,
+.form-select.is-invalid {
+  border-color: #ef4444;
+}
+
+.form-label {
+  color: #475569;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.form-label i {
+  font-size: 1.1rem;
+}
+
+.invalid-feedback {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: #fef2f2;
+  border-left: 3px solid #ef4444;
+  border-radius: 4px;
+}
+
+.btn {
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #5568d3 0%, #63408a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-outline-secondary {
+  border: 2px solid #cbd5e1;
+  color: #64748b;
+}
+
+.btn-outline-secondary:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #475569;
+  transform: translateY(-2px);
+}
+
+textarea {
+  resize: vertical;
+  font-family: inherit;
+  line-height: 1.6;
+}
+
+.form-info {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .page-header h2 {
+    font-size: 1.5rem;
+  }
+  
+  .card-body {
+    padding: 1.25rem !important;
+  }
+  
+  .btn-lg {
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+  }
+  
+  .col-md-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  #formPage {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+  
+  .d-flex.gap-3 {
+    flex-direction: column;
+    align-items: stretch !important;
+  }
+  
+  .d-flex.gap-2 {
+    width: 100%;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+  
+  .ms-auto {
+    margin-left: 0 !important;
+  }
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.5s ease-out;
+}
+</style>

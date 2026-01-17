@@ -120,6 +120,15 @@ export class Main implements OnInit {
     return classes[statusId] || 'bg-secondary';
   }
 
+  editTask(task: TaskM) {
+    console.log('Edit task:', task);
+    this.router.navigate(['/newEvent', task.id]);
+  }
+
+  onRowDoubleClick(task: TaskM) {
+    console.log('Double-click on task:', task);
+    this.router.navigate(['/newEvent', task.id]);
+  }
 
   confirmDelete(id: number | undefined) {
     if (id && confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?')) {
@@ -133,21 +142,12 @@ export class Main implements OnInit {
     }
   }
 
-  editTask(task: TaskM) {
-    console.log('Edit task:', task);
-    // TODO: Implement edit functionality
-    this.router.navigate(['/newEvent', task.id]);
-  }
-
   movetoTaskpage() {
     console.log('Navigate to task page');
     this.router.navigate(['/newEvent']);
   }
 
-  openCreateModal() {
-    console.log('Open create modal');
-    // TODO: Implement modal opening logic
-  }
+
 
   trackByTaskId(index: number, task: TaskM): number | undefined {
     return task.id;

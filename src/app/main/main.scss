@@ -172,3 +172,43 @@ tr[style*="cursor: pointer"] td:not(:last-child):hover {
   margin-bottom: 2rem;
 }
 }
+
+.clickable-row {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none; // Empêche la sélection de texte lors du double-clic
+}
+
+.clickable-row:hover {
+  background-color: rgba(0, 123, 255, 0.1) !important;
+  transform: scale(1.01);
+}
+
+.clickable-row:active {
+  transform: scale(0.99);
+}
+
+// Tooltip hint for double-click
+.clickable-row::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+// Animation for row hover
+@keyframes rowPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  }
+}
+
+.clickable-row:hover {
+  animation: rowPulse 1.5s ease-in-out;
+}
